@@ -275,6 +275,19 @@ def build_dataloader(cfg, split: str = "train") -> DataLoader:
                 split="train",
                 transform=transform,
             )
+        elif dataset_name == "NIfTI":
+            from .volumetric_dataset import VolumetricSRDataset
+            scale = data_cfg.get("scale", 2)
+            patch_size_3d = data_cfg.get("patch_size_3d", 32)
+            dataset = VolumetricSRDataset(
+                data_root=data_cfg.data_root,
+                scale=scale,
+                patch_size=patch_size_3d,
+                split="train",
+                patches_per_volume=data_cfg.get("patches_per_volume", 50),
+                anisotropic_axis=data_cfg.get("anisotropic_axis", None),
+                file_ext=data_cfg.get("file_ext", ".nii.gz"),
+            )
         else:
             raise ValueError(f"Unknown train dataset: {dataset_name}")
         shuffle = True

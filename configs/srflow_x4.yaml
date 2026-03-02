@@ -1,0 +1,36 @@
+defaults:
+  - base
+
+experiment:
+  name: "srflow_x4"
+
+model:
+  name: "srflow"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+  num_rrdb: 8
+  num_flow_steps: 16
+  rrdb_features: 64
+  temperature: 0.8
+
+data:
+  scale: 4
+  patch_size: 160      # SRFlow trains on larger patches
+  batch_size: 8
+
+trainer:
+  type: "flow"
+  max_epochs: 300
+  grad_accumulation_steps: 2
+  mixed_precision: true
+
+optimizer:
+  lr: 2.0e-4
+  betas: [0.9, 0.99]
+
+scheduler:
+  T_max: 300
+  eta_min: 1.0e-6
+
+losses: {}             # NLL only — handled by FlowTrainer

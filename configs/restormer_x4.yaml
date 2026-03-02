@@ -1,0 +1,34 @@
+defaults:
+  - base
+
+experiment:
+  name: "restormer_x4"
+
+model:
+  name: "restormer"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+  dim: 48
+  num_blocks: [4, 6, 6, 8]
+  num_refinement_blocks: 4
+  heads: [1, 2, 4, 8]
+  ffn_expansion_factor: 2.66
+
+data:
+  scale: 4
+  patch_size: 128
+  batch_size: 4
+
+trainer:
+  max_epochs: 400
+  grad_accumulation_steps: 4
+  mixed_precision: true
+
+optimizer:
+  lr: 3.0e-4
+  betas: [0.9, 0.99]
+
+scheduler:
+  T_max: 400
+  eta_min: 1.0e-6

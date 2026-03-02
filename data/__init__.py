@@ -6,6 +6,7 @@ from .datasets import (
 )
 from .transforms import SRTransform
 from .degradations import DegradationPipeline
+from .volumetric_dataset import VolumetricSRDataset
 
 __all__ = [
     "DIV2KDataset",
@@ -14,4 +15,5 @@ __all__ = [
     "build_dataloader",
     "SRTransform",
     "DegradationPipeline",
+    "VolumetricSRDataset",
 ]

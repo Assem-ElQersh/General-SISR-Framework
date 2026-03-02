@@ -1,0 +1,26 @@
+defaults:
+  - base
+
+experiment:
+  name: "fsrcnn_x4"
+
+model:
+  name: "fsrcnn"
+  scale: 4
+  in_channels: 1       # Y-channel
+  out_channels: 1
+  d: 56
+  s: 12
+  m: 4
+
+data:
+  scale: 4
+  patch_size: 48
+  batch_size: 64
+
+optimizer:
+  lr: 1.0e-3
+
+scheduler:
+  T_max: 400
+  eta_min: 1.0e-6

@@ -25,6 +25,7 @@ from .pixel_loss import PixelLoss, CharbonnierLoss
 from .perceptual_loss import PerceptualLoss
 from .adversarial_loss import AdversarialLoss
 from .frequency_loss import FrequencyLoss
+from .physics_loss import PhysicsLoss
 
 
 def build_losses(cfg) -> Dict[str, nn.Module]:
@@ -62,6 +63,15 @@ def build_losses(cfg) -> Dict[str, nn.Module]:
         modules["frequency"] = FrequencyLoss(
             weight=c.get("weight", 0.1),
             loss_type=c.get("type", "L1"),
+        )
+
+    if "physics" in losses_cfg:
+        c = losses_cfg["physics"]
+        modules["physics"] = PhysicsLoss(
+            scale=c.get("scale", cfg.get("model", {}).get("scale", 4)),
+            weight=c.get("weight", 0.1),
+            kernel_size=c.get("kernel_size", 15),
+            kernel_sigma=c.get("kernel_sigma", 1.6),
         )
 
     return modules

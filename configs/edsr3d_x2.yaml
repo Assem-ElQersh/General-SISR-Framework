@@ -1,0 +1,42 @@
+defaults:
+  - base
+
+experiment:
+  name: "edsr3d_x2"
+
+model:
+  name: "edsr3d"
+  scale: 2
+  in_channels: 1
+  out_channels: 1
+  num_features: 64
+  num_resblocks: 16
+  res_scale: 0.1
+
+data:
+  train_dataset: "NIfTI"
+  val_dataset: "NIfTI"
+  data_root: "datasets/volumetric"
+  scale: 2
+  patch_size_3d: 32
+  patches_per_volume: 50
+  batch_size: 4
+  num_workers: 2
+  file_ext: ".nii.gz"
+
+losses:
+  pixel:
+    type: "L1"
+    weight: 1.0
+
+trainer:
+  max_epochs: 200
+  mixed_precision: true
+  grad_accumulation_steps: 2
+
+optimizer:
+  lr: 1.0e-4
+
+scheduler:
+  T_max: 200
+  eta_min: 1.0e-6

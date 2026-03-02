@@ -1,0 +1,26 @@
+defaults:
+  - base
+
+experiment:
+  name: "rdn_x4"
+
+model:
+  name: "rdn"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+  num_features: 64
+  num_blocks: 16
+  growth_rate: 32
+  num_layers: 8
+
+data:
+  scale: 4
+  patch_size: 48
+  batch_size: 16
+
+trainer:
+  max_epochs: 300
+
+optimizer:
+  lr: 1.0e-4

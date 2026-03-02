@@ -1,0 +1,25 @@
+defaults:
+  - base
+
+experiment:
+  name: "dbpn_x4"
+
+model:
+  name: "dbpn"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+  num_features: 128
+  bp_features: 32
+  num_stages: 7
+
+data:
+  scale: 4
+  patch_size: 64
+  batch_size: 8
+
+trainer:
+  max_epochs: 300
+
+optimizer:
+  lr: 1.0e-4

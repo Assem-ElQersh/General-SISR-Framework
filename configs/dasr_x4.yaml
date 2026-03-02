@@ -1,0 +1,28 @@
+defaults:
+  - base
+
+experiment:
+  name: "dasr_x4"
+
+model:
+  name: "dasr"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+  num_features: 64
+  d_dim: 512
+  num_blocks: 16
+
+data:
+  scale: 4
+  patch_size: 64
+  batch_size: 16
+  train_dataset: "DIV2K"
+
+losses:
+  pixel:
+    type: "L1"
+    weight: 1.0
+
+optimizer:
+  lr: 1.0e-4

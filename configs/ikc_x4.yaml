@@ -1,0 +1,32 @@
+defaults:
+  - base
+
+experiment:
+  name: "ikc_x4"
+
+model:
+  name: "ikc"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+  num_features: 64
+  k_features: 70
+  num_blocks: 16
+  num_iter: 4
+
+data:
+  scale: 4
+  patch_size: 64
+  batch_size: 16
+
+losses:
+  pixel:
+    type: "L1"
+    weight: 1.0
+  physics:
+    weight: 0.05
+    scale: 4
+    kernel_size: 21
+
+optimizer:
+  lr: 1.0e-4

@@ -1,0 +1,31 @@
+defaults:
+  - base
+
+experiment:
+  name: "ddnm_x4"
+
+model:
+  name: "ddnm"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+  model_channels: 64
+  channel_mult: [1, 2, 4, 8]
+  num_res_blocks: 2
+  attention_resolutions: [16, 8]
+  timesteps: 1000
+  noise_schedule: "linear"
+  beta_start: 1.0e-4
+  beta_end: 0.02
+  pretrained_ckpt: null     # path to pretrained unconditional DDPM
+
+# DDNM is zero-shot — no training required.
+# Set trainer.max_epochs to 0 to skip training and go straight to inference.
+trainer:
+  type: "diffusion"
+  max_epochs: 0
+
+losses:
+  pixel:
+    type: "L1"
+    weight: 1.0

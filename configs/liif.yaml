@@ -1,0 +1,27 @@
+defaults:
+  - base
+
+experiment:
+  name: "liif"
+
+model:
+  name: "liif"
+  scale: 4             # default inference scale
+  in_channels: 3
+  out_channels: 3
+  num_features: 64
+  num_resblocks: 16
+  hidden_dim: 256
+
+data:
+  scale: 4
+  patch_size: 48
+  batch_size: 16
+
+optimizer:
+  lr: 1.0e-4
+
+losses:
+  pixel:
+    type: "L1"
+    weight: 1.0

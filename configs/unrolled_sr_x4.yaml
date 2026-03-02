@@ -1,0 +1,31 @@
+defaults:
+  - base
+
+experiment:
+  name: "unrolled_sr_x4"
+
+model:
+  name: "unrolled_sr"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+  num_stages: 8
+  prox_features: 64
+  prox_layers: 5
+  shared_prox: false
+
+data:
+  scale: 4
+  patch_size: 64
+  batch_size: 16
+
+losses:
+  pixel:
+    type: "L1"
+    weight: 1.0
+  physics:
+    weight: 0.1
+    scale: 4
+
+optimizer:
+  lr: 1.0e-4

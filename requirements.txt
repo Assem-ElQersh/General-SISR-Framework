@@ -15,3 +15,6 @@ matplotlib>=3.7.0
 tensorboard>=2.14.0
 scikit-image>=0.21.0
 requests>=2.31.0
+nibabel>=5.0.0       # NIfTI volumetric data (3D SR)
+pydicom>=2.4.0       # DICOM volumetric data (3D SR, optional)
+# mamba-ssm>=1.2.0  # MambaIR CUDA kernels — GPU-specific; install separately if needed
