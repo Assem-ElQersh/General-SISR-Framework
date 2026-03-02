@@ -186,30 +186,6 @@ Volumetric training requires NIfTI files (`.nii.gz`) in `datasets/volumetric/`.
 
 ---
 
-## GPU Constraints (RTX 3050 Ti — 4GB VRAM)
-
-All models support:
-- **Mixed precision** (`amp`) — enabled by default
-- **Gradient accumulation** — configured via `trainer.grad_accumulation_steps`
-- **Tiled inference** — overlap-tile strategy for inference on any image size
-
-Recommended configs for 4GB VRAM:
-
-| Model | patch_size | batch_size | grad_accum |
-|-------|-----------|------------|------------|
-| EDSR | 48 | 8 | 4 |
-| RDN | 48 | 8 | 4 |
-| RCAN | 48 | 4 | 8 |
-| SwinIR | 64 | 4 | 8 |
-| HAT | 64 | 2 | 16 |
-| Restormer | 128 | 4 | 4 |
-| MambaIR | 64 | 8 | 2 |
-| SR3 | 64 | 2 | 8 |
-| SRFlow | 160 | 8 | 2 |
-| EDSR3D | 32³ | 4 | 2 |
-
----
-
 ## Model Taxonomy
 
 ```
