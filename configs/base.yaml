@@ -1,0 +1,64 @@
+# Base configuration — all model configs inherit from this.
+# Override any key in the model-specific config.
+
+# ── Experiment ─────────────────────────────────────────────────────────────
+experiment:
+  name: "sisr_base"
+  output_dir: "outputs"
+  seed: 42
+
+# ── Data ───────────────────────────────────────────────────────────────────
+data:
+  train_dataset: "DIV2K"
+  val_dataset: "Set5"
+  data_root: "datasets"
+  scale: 4
+  patch_size: 48        # HR patch size during training
+  batch_size: 16
+  num_workers: 4
+  augmentation:
+    random_flip: true
+    random_rotate: true
+
+# ── Model ──────────────────────────────────────────────────────────────────
+model:
+  name: "base"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+
+# ── Losses ─────────────────────────────────────────────────────────────────
+losses:
+  pixel:
+    type: "L1"
+    weight: 1.0
+
+# ── Trainer ────────────────────────────────────────────────────────────────
+trainer:
+  type: "psnr"
+  max_epochs: 300
+  val_every: 5
+  save_every: 10
+  grad_accumulation_steps: 1
+  mixed_precision: true
+  clip_grad_norm: null
+
+# ── Optimizer ──────────────────────────────────────────────────────────────
+optimizer:
+  type: "Adam"
+  lr: 1.0e-4
+  betas: [0.9, 0.999]
+  weight_decay: 0.0
+
+# ── Scheduler ──────────────────────────────────────────────────────────────
+scheduler:
+  type: "CosineAnnealingLR"
+  T_max: 300
+  eta_min: 1.0e-7
+
+# ── Logging ────────────────────────────────────────────────────────────────
+logging:
+  use_tensorboard: true
+  use_wandb: false
+  wandb_project: "sisr_framework"
+  log_image_every: 10

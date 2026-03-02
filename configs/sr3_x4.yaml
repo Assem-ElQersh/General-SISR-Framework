@@ -1,0 +1,48 @@
+defaults:
+  - base
+
+experiment:
+  name: "sr3_x4"
+
+data:
+  scale: 4
+  patch_size: 128
+  batch_size: 8
+
+model:
+  name: "sr3"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+  model_channels: 64
+  channel_mult: [1, 2, 4, 8]
+  num_res_blocks: 2
+  attention_resolutions: [16, 8]
+  dropout: 0.2
+  # Diffusion parameters
+  timesteps: 2000
+  noise_schedule: "linear"    # "linear" | "cosine"
+  beta_start: 1.0e-4
+  beta_end: 0.02
+
+losses:
+  pixel:
+    type: "L2"
+    weight: 1.0
+
+trainer:
+  type: "diffusion"
+  max_epochs: 1000
+  grad_accumulation_steps: 8
+  mixed_precision: true
+  sample_every: 50
+
+optimizer:
+  type: "Adam"
+  lr: 1.0e-4
+  betas: [0.9, 0.999]
+
+scheduler:
+  type: "CosineAnnealingLR"
+  T_max: 1000
+  eta_min: 1.0e-7

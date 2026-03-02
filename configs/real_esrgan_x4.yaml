@@ -1,0 +1,71 @@
+defaults:
+  - base
+
+experiment:
+  name: "real_esrgan_x4"
+
+data:
+  scale: 4
+  patch_size: 256
+  batch_size: 12
+  # Real-ESRGAN uses synthetic degradation during training; no paired HR/LR needed
+  use_degradation_pipeline: true
+  degradation:
+    blur:
+      kernel_size: [7, 21]
+      sigma: [0.2, 3.0]
+      prob: 1.0
+    resize:
+      up_factor: [1.0, 2.0]
+      down_factor: [0.15, 1.0]
+      mode: ["area", "bilinear", "bicubic"]
+    noise:
+      sigma: [1, 30]
+      prob: 0.5
+    jpeg:
+      quality: [30, 95]
+      prob: 0.5
+    second_order: true    # Apply degradation twice
+
+model:
+  name: "real_esrgan"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+  num_features: 64
+  num_rrdb: 23
+  growth_channels: 32
+
+losses:
+  pixel:
+    type: "L1"
+    weight: 0.01
+  perceptual:
+    type: "vgg"
+    layer: "relu3_4"
+    weight: 1.0
+  adversarial:
+    type: "ragan"
+    weight: 0.005
+
+trainer:
+  type: "gan"
+  max_epochs: 400
+  pretrain_epochs: 50
+  grad_accumulation_steps: 2
+  mixed_precision: true
+
+optimizer:
+  generator:
+    type: "Adam"
+    lr: 1.0e-4
+    betas: [0.9, 0.999]
+  discriminator:
+    type: "Adam"
+    lr: 1.0e-4
+    betas: [0.9, 0.999]
+
+scheduler:
+  type: "MultiStepLR"
+  milestones: [100, 200, 300]
+  gamma: 0.5

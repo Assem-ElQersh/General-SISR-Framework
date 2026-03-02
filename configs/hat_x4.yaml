@@ -1,0 +1,41 @@
+defaults:
+  - base
+
+experiment:
+  name: "hat_x4"
+
+data:
+  scale: 4
+  patch_size: 64
+  batch_size: 4
+
+model:
+  name: "hat"
+  scale: 4
+  in_channels: 3
+  out_channels: 3
+  img_size: 64
+  window_size: 16
+  embed_dim: 144
+  depths: [6, 6, 6, 6, 6, 6]
+  num_heads: [6, 6, 6, 6, 6, 6]
+  mlp_ratio: 2.0
+  compress_ratio: 3
+  squeeze_factor: 30
+  overlap_ratio: 0.5
+
+trainer:
+  max_epochs: 500
+  grad_accumulation_steps: 16
+  mixed_precision: true
+
+optimizer:
+  type: "Adam"
+  lr: 2.0e-4
+  betas: [0.9, 0.999]
+  weight_decay: 0.0
+
+scheduler:
+  type: "MultiStepLR"
+  milestones: [250, 400, 450, 475]
+  gamma: 0.5
